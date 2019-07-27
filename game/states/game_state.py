@@ -1,12 +1,25 @@
 from game.states.state import State
 
+from game.objects.map import Map
+from game.objects.snake import Snake
+
 
 class GameState(State):
+    map = None
+    snakes = []
+
     def __init__(self):
-        pass
+        self.map = Map()
     
     def render(self):
-        pass
+        self.map.render()
+        for snake in self.snakes:
+            snake.render()
 
     def update(self):
-        pass
+        self.map.update()
+        for snake in self.snakes:
+            snake.update()
+
+    def add_snake(self):
+        self.snakes.append(Snake())

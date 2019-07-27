@@ -17,12 +17,15 @@ class Game:
     
     def mainloop(self):
         while self.running:
-            pygame.time.delay(100)
-            self.update()
-            self.render()
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+
+            self.update()
+            self.render()
+            pygame.display.update()
+            pygame.time.delay(10)
+            self.window.fill((0, 0, 0))
 
     def update(self):
         self.state_manager.update()

@@ -1,4 +1,4 @@
-class Snake:
+class Map:
     def render(self):
         pass
 
