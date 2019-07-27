@@ -33,6 +33,8 @@ def state_menuRecvThumbnails():
 class NetworkManager(Thread):
     def __init__(self):
         Thread.__init__(self)
+        cfg = getConfig()
+        self.gameserverIp = cfg[""]
         self.states = {
             "idle":"",
             "menuRecvThumbnails":self.gameStateGetThumbs,
@@ -71,7 +73,7 @@ class NetworkManager(Thread):
     def gameStateGetMap(self):
         self.gotMap = False
         if not os.path.exists("assets/map/{}/".format(self.mapnames[self.selectedGame])):
-            self.thumbsocket.send(str(self.selectedGame).encode())
+            self.thumbsocket.send(str((self.selectedGame, True)).encode())
             data = pickle.loads(self.thumbsocket.recv(512 ** 4))
             createImageFromPickle(data["map"], "assets/maps/{}/map.png".format(self.mapnames[self.selectedGame]))
             createImageFromPickle(data["map-settings"], "assets/maps/{}/map-settings.png".format(self.mapnames[self.selectedGame]))

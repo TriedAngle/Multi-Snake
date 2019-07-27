@@ -1,5 +1,6 @@
 import pygame
 from game.state_manager import StateManager
+from game import network
 
 
 class Game:
@@ -11,6 +12,7 @@ class Game:
     def __init__(self):
         self.window = pygame.display.set_mode((500, 500))
         pygame.display.set_caption("First Game")
+        self.networkManager = network.NetworkManager()
         self.running = True
         self.state_manager = StateManager()
         self.mainloop()
@@ -20,6 +22,7 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
+                self.state_manager.event = event
 
             self.update()
             self.render()

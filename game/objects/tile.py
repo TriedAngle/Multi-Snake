@@ -12,6 +12,10 @@ class Tile:
         pass
 
 
-class Dirt(Tile):
-    pass
+class teleporter:
+    def __init__(self, x, y, oX, oY):
+        self.x = x
+        self.y = y
+        self.oX = oX
+        self.oY = oY
 

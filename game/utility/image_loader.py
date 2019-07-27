@@ -1,11 +1,20 @@
 from PIL import Image
 
-
 def load_map(map_name):
-    map_image = Image.open("assets/maps/" + map_name + "/map.png")
-    return map_image.load()
-
+    return Image.open("assets/maps/" + map_name + "/map.png")
 
 def load_map_settings(map_name):
-    map_settings_image = Image.open("assets/maps/" + map_name + "/map_settings.png")
-    return map_settings_image.load()
+    return Image.open("assets/maps/" + map_name + "/map-settings.png")
+
+def loadTileId(id):
+        img = Image.open("assets/texturepacks/default/tiles.png")
+        px = img.load()
+        xStart = ((id + 1) * 16 - 16) % 256
+        yStart = (id // 16) * 16
+        res = []
+        for i in range(16):
+            xRow = []
+            for j in range(16):
+                xRow.append(px[xStart + i, yStart + j])
+            res.append(xRow)
+        return res
