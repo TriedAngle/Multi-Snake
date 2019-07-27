@@ -7,4 +7,8 @@ A simple multiplayer capable snake game.
 2. Usage
 3. Building / Exporting
 
-## xD
+## 1. Installation
+
+## 2. Usage
+
+## 3. Building / Exporting
