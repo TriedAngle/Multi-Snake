@@ -1,4 +1,5 @@
-from state import State
+from game.states.state import State
+
 
 class GameState(State):
     def __init__(self):
@@ -9,6 +10,3 @@ class GameState(State):
 
     def update(self):
         pass
-    
-
-
