@@ -38,4 +38,5 @@ class Map:
             tile.render(window)
 
     def update(self):
-        pass
+        for tile in self.tiles:
+            tile.update()

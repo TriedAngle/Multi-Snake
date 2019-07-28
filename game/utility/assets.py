@@ -10,10 +10,22 @@ class Assets:
         self.sprite_sheet = Image.open("assets/texturepacks/" + texture_pack + "/sprite_sheet.png").convert('RGB')
 
     def set_sprites(self):
-        tmp = 0
-        for x in range(0, 16):
-            for y in range(0, 16):
-                self.sprites.append(self.sprite_sheet.crop((x*16, y*16, x*16 + 16, y*16 + 16)).resize((64, 64), Image.ANTIALIAS))
+        for y in range(0, 2):
+            for x in range(0, 16):
+                self.sprites.append(self.sprite_sheet.crop((x*16, y*16, x*16 + 16, y*16 + 16))
+                                    .resize((64, 64), Image.ANTIALIAS))
 
     def get_sprite(self, index):
         return self.sprites[index]
+
+    def get_animated(self, indexes):
+        sprites = []
+        for index in indexes:
+            sprites.append(self.get_sprite(index))
+
+        return sprites
+
+
+asset = Assets()
+asset.load_sprite_sheet()
+asset.set_sprites()

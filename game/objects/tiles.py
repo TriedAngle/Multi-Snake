@@ -1,38 +1,32 @@
 from game.objects.tile import Tile
-from game.utility.assets import Assets
-
-assets = Assets()
-assets.load_sprite_sheet()
-assets.set_sprites()
-grass_texture = assets.get_sprite(0)
-# grass_texture = grass_texture.resize((64, 64), Image.ANTIALIAS)
-# water_area = (64, 16, 80, 32)
-# water_texture = sprite_sheet.crop(water_area)
-# water_texture = water_texture.resize((64, 64), Image.ANTIALIAS)
-# lava_area = (128, 16, 144, 32)
-# lava_texture = sprite_sheet.crop(lava_area)
-# lava_texture = lava_texture.resize((64, 64), Image.ANTIALIAS)
+from game.utility.assets import asset
 
 
 class GrassTile(Tile):
     def __init__(self, x, y):
-        self.texture = grass_texture
+        self.texture = asset.get_sprite(16)
         super().__init__(self.texture, x, y)
 
 
 class WaterTile(Tile):
     def __init__(self, x, y):
-        self.texture = grass_texture
-        super().__init__(self.texture, x, y)
+        self.raw_textures = asset.get_animated((19, 20, 21))
+        super().__init__(None, x, y, self.raw_textures)
 
     def is_solid(self):
         return False
 
+    def is_animated(self):
+        return True
+
 
 class LavaTile(Tile):
     def __init__(self, x, y):
-        self.texture = grass_texture
-        super().__init__(self.texture, x, y)
+        self.raw_textures = asset.get_animated((22, 23, 24))
+        super().__init__(None, x, y, self.raw_textures)
 
     def is_solid(self):
+        return True
+
+    def is_animated(self):
         return True
