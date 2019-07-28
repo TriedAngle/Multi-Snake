@@ -10,11 +10,12 @@ class GameState(State):
 
     def __init__(self):
         self.map = Map()
+        self.add_snake()
     
     def render(self, window):
         self.map.render(window)
         for snake in self.snakes:
-            snake.render()
+            snake.render(window)
 
     def update(self):
         self.map.update()
