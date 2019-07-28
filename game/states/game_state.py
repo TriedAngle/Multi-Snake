@@ -3,7 +3,6 @@ from game.states.state import State
 from game.objects.map import Map
 from game.objects.snake import Snake
 
-
 class GameState(State):
     map = None
     snakes = []

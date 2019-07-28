@@ -3,18 +3,20 @@ import socket
 from threading import Thread
 import pickle
 
-
 app = Flask(__name__)
+
 
 @app.route("/")
 def index():
-    render_template("server/templates/index.html")
+    return render_template("index.html")
 
 
 class Server:
     def __init__(self):
+        app.run(port=5000, host='0.0.0.0')
         self.threads = []
         self.games = []
+
     def createGame(self, player0Ip, player0Port, player0Sock, player1Ip, player1Port, player1Sock):
         game = {
             "player-0-ip":player0Ip,
