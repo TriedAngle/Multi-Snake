@@ -1,6 +1,5 @@
 import pygame
 from game.state_manager import StateManager
-from game import network
 
 
 class Game:
@@ -11,8 +10,7 @@ class Game:
 
     def __init__(self):
         self.window = pygame.display.set_mode((500, 500))
-        pygame.display.set_caption("First Game")
-        self.networkManager = network.NetworkManager()
+        pygame.display.set_caption("Snaky Snake")
         self.running = True
         self.state_manager = StateManager()
         self.mainloop()
@@ -25,7 +23,7 @@ class Game:
                 self.state_manager.event = event
 
             self.update()
-            self.render()
+            self.render(self.window)
             pygame.display.update()
             pygame.time.delay(10)
             self.window.fill((0, 0, 0))
@@ -33,5 +31,5 @@ class Game:
     def update(self):
         self.state_manager.update()
 
-    def render(self):
-        self.state_manager.render()
+    def render(self, window):
+        self.state_manager.render(window)

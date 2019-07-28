@@ -5,7 +5,7 @@ class State(ABC):
     name = ""
 
     @abstractmethod
-    def render(self):
+    def render(self, window):
         pass
 
     @abstractmethod

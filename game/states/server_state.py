@@ -1,3 +1,14 @@
-from flask import Flask, render_template
+from game.states.state import State
+from server import server
 
-app = Flask(__name__)
+
+class ServerState(State):
+    def __init__(self):
+        self.event = None
+        self.server = server.Server()
+
+    def render(self, window):
+        pass
+
+    def update(self):
+        pass

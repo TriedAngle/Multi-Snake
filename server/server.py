@@ -1,16 +1,17 @@
-"""from flask import Flask, render_template
+from flask import Flask, render_template
+import socket
+from threading import Thread
+import pickle
+
 
 app = Flask(__name__)
 
 @app.route("/")
 def index():
-    render_template()"""
+    render_template("server/templates/index.html")
 
-import socket
-from threading import Thread
-import pickle
 
-class server:
+class Server:
     def __init__(self):
         self.threads = []
         self.games = []
@@ -65,3 +66,4 @@ class gameThread(Thread):
 
     def run(self):
         while True:
+            pass

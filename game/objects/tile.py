@@ -1,21 +1,27 @@
-class Tile:
-    tile_id = None
-    tile_x = None
-    tile_y = None
-    tile_width = 16
-    tile_height = 16
+import pygame
 
-    def render(self):
-        pass
+
+class Tile:
+    width, height = 16, 16
+    tile_id = None
+    texture = None
+
+    def __init__(self, texture, x, y):
+        self.mode = texture.mode
+        self.size = texture.size
+        self.data = texture.tobytes()
+        self.texture = pygame.image.fromstring(self.data, self.size, self.mode)
+        self.x = x
+        self.y = y
 
     def update(self):
         pass
 
+    def render(self, window):
+        window.blit(self.texture, (self.x, self.y))
 
-class teleporter:
-    def __init__(self, x, y, oX, oY):
-        self.x = x
-        self.y = y
-        self.oX = oX
-        self.oY = oY
+    def is_solid(self):
+        return False
 
+    def get_tile_id(self):
+        return self.tile_id

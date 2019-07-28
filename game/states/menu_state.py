@@ -1,6 +1,5 @@
 from game.states.state import State
-import pygame
-from game.utility.misc import is_between
+
 
 class MenuState(State):
     def __init__(self):
@@ -10,6 +9,4 @@ class MenuState(State):
         pass
 
     def update(self):
-        if self.event.type == pygame.MOUSEBUTTONDOWN:
-            if is_between()
-
+        pass

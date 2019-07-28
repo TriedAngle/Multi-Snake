@@ -1,10 +1,13 @@
 from PIL import Image
 
+
 def load_map(map_name):
     return Image.open("assets/maps/" + map_name + "/map.png")
 
+
 def load_map_settings(map_name):
     return Image.open("assets/maps/" + map_name + "/map-settings.png")
+
 
 def loadTileId(id):
         img = Image.open("assets/texturepacks/default/tiles.png")

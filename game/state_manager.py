@@ -8,13 +8,12 @@ class StateManager:
 
     current_state = None
 
-    def __init__(self, network_manager):
-        self.current_state = self.menu_state
-        self.network_manager = network_manager
+    def __init__(self):
+        self.current_state = self.game_state
         self.event = None
 
-    def render(self):
-        self.current_state.render()
+    def render(self, window):
+        self.current_state.render(window)
 
     def update(self):
         self.current_state.update()

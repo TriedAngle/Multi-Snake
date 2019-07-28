@@ -11,8 +11,8 @@ class GameState(State):
     def __init__(self):
         self.map = Map()
     
-    def render(self):
-        self.map.render()
+    def render(self, window):
+        self.map.render(window)
         for snake in self.snakes:
             snake.render()
 
