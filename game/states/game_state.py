@@ -3,12 +3,13 @@ from game.states.state import State
 from game.objects.map import Map
 from game.objects.snake import Snake
 
+
 class GameState(State):
     map = None
     snakes = []
 
     def __init__(self):
-        self.map = Map()
+        self.map = Map("default")
         self.add_snake()
     
     def render(self, window):
