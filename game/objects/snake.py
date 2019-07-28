@@ -1,23 +1,39 @@
 import pygame
+from game.utility.assets import asset
 
 
 class Snake:
-    x = 128
-    y = 128
+    x = None
+    y = None
     width = 64
     height = 64
-    color = (255, 200, 200)
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+        self.tick = 0
+        self.mov_locked = False
 
     def render(self, window):
-        pygame.draw.rect(window, self.color, (self.x, self.y, self.width, self.height))
+        window.blit(asset.get_sprite(0), (self.x, self.y))
 
     def update(self):
-        key = pygame.key.get_pressed()
-        if key[pygame.K_w]:
-            self.y -= 64
-        if key[pygame.K_s]:
-            self.y += 64
-        if key[pygame.K_a]:
-            self.x -= 64
-        if key[pygame.K_d]:
-            self.x += 64
+        self.tick += 1
+        if self.tick >= 30:
+            self.tick = 0
+            self.mov_locked = False
+
+        if not self.mov_locked:
+            key = pygame.key.get_pressed()
+            if key[pygame.K_w]:
+                self.y -= 64
+                self.mov_locked = True
+            if key[pygame.K_s]:
+                self.y += 64
+                self.mov_locked = True
+            if key[pygame.K_a]:
+                self.x -= 64
+                self.mov_locked = True
+            if key[pygame.K_d]:
+                self.x += 64
+                self.mov_locked = True

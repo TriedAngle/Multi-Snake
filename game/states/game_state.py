@@ -23,4 +23,4 @@ class GameState(State):
             snake.update()
 
     def add_snake(self):
-        self.snakes.append(Snake())
+        self.snakes.append(Snake(64*8, 64*8))

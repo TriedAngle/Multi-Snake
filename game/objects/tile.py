@@ -7,17 +7,13 @@ class Tile:
     texture = None
     textures = []
 
-    def __init__(self, texture, x, y, raw_textures=None):
-        self.raw_textures = raw_textures
-        self.raw_texture = texture
+    def __init__(self, texture, x, y, textures=None):
+        self.textures = textures
+
         if not self.is_animated():
-            self.texture = pygame.image.fromstring(self.raw_texture.tobytes(),
-                                                   self.raw_texture.size,
-                                                   self.raw_texture.mode)
+            self.texture = texture
         else:
-            self.texture = pygame.image.fromstring(self.raw_textures[0].tobytes(),
-                                                   self.raw_textures[0].size,
-                                                   self.raw_textures[0].mode)
+            self.texture = textures[0]
 
         self.texture_index = 0
         self.x = x
@@ -31,11 +27,9 @@ class Tile:
 
         if self.is_animated() and self.ticks % 20 == 0:
             self.texture_index += 1
-            if self.texture_index >= len(self.raw_textures):
+            if self.texture_index >= len(self.textures):
                 self.texture_index = 0
-            self.texture = pygame.image.fromstring(self.raw_textures[self.texture_index].tobytes(),
-                                                   self.raw_textures[self.texture_index].size,
-                                                   self.raw_textures[self.texture_index].mode)
+            self.texture = self.textures[self.texture_index]
 
     def render(self, window):
         window.blit(self.texture, (self.x, self.y))

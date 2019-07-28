@@ -1,4 +1,5 @@
 from PIL import Image
+import pygame
 
 
 class Assets:
@@ -12,8 +13,11 @@ class Assets:
     def set_sprites(self):
         for y in range(0, 2):
             for x in range(0, 16):
-                self.sprites.append(self.sprite_sheet.crop((x*16, y*16, x*16 + 16, y*16 + 16))
-                                    .resize((64, 64), Image.ANTIALIAS))
+                tmp_image = self.sprite_sheet.crop((x*16, y*16, x*16 + 16, y*16 + 16)).resize((64, 64), Image.ANTIALIAS)
+                tmp_img_data = tmp_image.tobytes()
+                tmp_image_size = tmp_image.size
+                tmp_image_mode = tmp_image.mode
+                self.sprites.append(pygame.image.fromstring(tmp_img_data, tmp_image_size, tmp_image_mode))
 
     def get_sprite(self, index):
         return self.sprites[index]
