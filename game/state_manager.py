@@ -6,7 +6,7 @@ class StateManager:
     menu_state = None
     game_state = None
     server_state = None
-    event = None
+    events = None
     current_state = None
 
     def __init__(self, is_server=False):
@@ -21,7 +21,7 @@ class StateManager:
         self.current_state.render(window)
 
     def update(self):
-        self.current_state.update()
+        self.current_state.update(self.events)
     
     def change_state(self, state):
         self.current_state = state

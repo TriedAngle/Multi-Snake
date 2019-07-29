@@ -10,7 +10,7 @@ class GameState(State):
 
     def __init__(self):
         self.map = Map("default")
-        self.add_snake()
+        #self.add_snake()
     
     def render(self, window):
         self.map.render(window)

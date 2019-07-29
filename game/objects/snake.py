@@ -1,47 +1,53 @@
 import pygame
 from game.utility.assets import asset
-
+from PIL import Image
 
 class Snake:
-    x = None
-    y = None
-    snake_parts = []
-    width = 64
-    height = 64
+    def __init__(self, pos, dir, window, res, id):
+        self.snake = [[pos[0], pos[1]]]
+        self.dir = dir
+        self.window = window
+        self.res = res
+        self.id = id
+        tiles = Image.open("assets/texturepacks/default/tiles.png")
+        headStartX = ((id + 1) * 16 - 16) % 256
+        headStartY = (id // 16) * 16
+        img_snakehead = tiles.crop((headStartX, headStartY, headStartX + 16, headStartY + 16))
+        self.img_snakehead = pygame.image.fromstring(img_snakehead.tobytes(), img_snakehead.size, img_snakehead.mode)
+        bodyStartX = ((id + 2) * 16 - 16) % 256
+        bodyStartY = ((id + 1) // 16) * 16
+        img_snakebody = tiles.crop((bodyStartX, bodyStartY, bodyStartX + 16, bodyStartY + 16))
+        self.img_snakebody = pygame.image.fromstring(img_snakebody.tobytes(), img_snakebody.size, img_snakebody.mode)
 
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-        self.snake_parts.append((x, y))
-        self.tick = 0
-        self.mov_locked = False
+    def shift(self, eaten):
+        last = self.snake[-1]
+        head = self.snake[0]
+        head[0] += self.dir[0]
+        head[1] += self.dir[1]
+        self.snake = self.snake[::-1][0:-1].append(head)
+        self.snake = self.snake[::-1]
+        if eaten:
+            self.snake.append(last)
 
-    def render(self, window):
-        for part in self.snake_parts:
-            if part == self.snake_parts[0]:
-                window.blit(asset.get_sprite(0), part)
-            else:
-                window.blit(asset.get_sprite(1), part)
+    def render(self):
+        self.window.blit(self.img_snakehead, self.snake[0])
+        for part in self.snake[::-1][0:-1][::-1]:
+            self.window.blit(self.img_snakebody, part)
 
-    def update(self):
-        self.tick += 1
-        if self.tick >= 30:
-            self.tick = 0
-            self.mov_locked = False
+    def update(self, food):
+        head = self.snake[0]
+        # 1. Movement #
+        # 1.1 Check if the snake will eat in the next turn
+        eaten = True if [head[0] + self.dir[0], head[1] + self.dir[1]] == food else False
+        # 1.2 Shift the snake, as we now know if it will eat or not
+        self.shift(eaten)
 
-        if not self.mov_locked:
-            key = pygame.key.get_pressed()
-            if key[pygame.K_w]:
-                self.y -= 64
-                self.mov_locked = True
-            if key[pygame.K_s]:
-                self.y += 64
-                self.mov_locked = True
-            if key[pygame.K_a]:
-                self.x -= 64
-                self.mov_locked = True
-            if key[pygame.K_d]:
-                self.x += 64
-                self.mov_locked = True
-
-        self.snake_parts[0] = self.x, self.y
+        # 2. Collision checking #
+        # We will return a boolean to indicate if the snake has collided with itself or the walls
+        # 2.1 Check them walls
+        if head[0] < 0 or head[0] >= self.res[0] or head[1] < 0 or head[1] >= self.res[1]:
+            return True, eaten
+        # 2.2 Check that body
+        elif head in self.snake[::-1][0:-1][::-1]:
+            return True, eaten
+        return False, eaten

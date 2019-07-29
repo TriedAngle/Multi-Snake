@@ -17,18 +17,19 @@ class Game:
         else:
             self.state_manager = StateManager()
             pygame.init()
-            self.window = pygame.display.set_mode((16*64, 16*64))
+            self.window = pygame.display.set_mode((1024, 768))
             pygame.display.set_caption("Snaky Snake")
-            self.state_manager.change_state(self.state_manager.game_state)
+            self.state_manager.change_state(self.state_manager.menu_state)
         self.mainloop()
     
     def mainloop(self):
         while self.running:
             if not self.is_server:
-                for event in pygame.event.get():
+                events = pygame.event.get()
+                for event in events:
                     if event.type == pygame.QUIT:
                         self.running = False
-                    self.state_manager.event = event
+                self.state_manager.events = events
 
                 self.update()
                 self.render(self.window)
